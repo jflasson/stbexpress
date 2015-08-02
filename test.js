@@ -59,6 +59,6 @@ describe('Creating new cities', function(){
 		request(app)
 			.post('/cities')
 			.send('name=Springfield&description=where+the+simpsons+live')
-			.expect(/springfield/, done)
+			.expect('Springfield', done)
 	});
 });
