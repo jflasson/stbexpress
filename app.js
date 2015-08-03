@@ -1,25 +1,36 @@
-//at 45  min
+//@48  min
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var urlencode = bodyParser.urlencoded({ extended: false });
+var redis = require('redis');
+var client = redis.createClient();
 
-var cities = {
-	'Lotopia': 'Desc1',
-	'Caspiana': 'Desc2',
-	'Indigo': 'Desc3'
-};
+client.select(1);
+
+//client.hset('cities','Lotopia', 'Desc1');
+//client.hset('cities','Caspiana', 'Desc2');
+//client.hset('cities','Indigo', 'Desc3');
 
 app.use(express.static(__dirname + '/public'));
 
 app.get('/cities', function(request, response){
-	response.json(Object.keys(cities));
+	client.hkeys('cities', function(error, names){
+		if(error) throw error;
+		response.json(names);
+	});
 });
 
 app.post('/cities', urlencode, function(request, response){
 	var newCity = request.body;
-	cities[newCity.name] = newCity.description;
-	response.status(201).json(newCity.name);
+	client.hset('cities', newCity.name, newCity.description, function(error){
+		if(error) throw errror;
+		response.status(201).json(newCity.name);
+	});
 });
 
-module.exports = app;
+app.delete('/cities/:name', function(){
+
+});
+
+module.exports = app; 
