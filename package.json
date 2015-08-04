@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "https://registry.npmjs.org/body-parser/-/body-parser-1.13.3.tgz",
+    "ejs": "^2.3.3",
     "express": "https://registry.npmjs.org/express/-/express-4.13.1.tgz",
     "hiredis": "^0.4.0",
     "redis": "^0.12.1"

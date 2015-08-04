@@ -87,7 +87,7 @@ describe('Delete cities', function(){
 	});
 
 	after(function(){
-		client.hdel('cities', 'Banana');
+		client.flushdb();
 	});
 
 	it('Returns 204 status code', function(done){
@@ -96,3 +96,36 @@ describe('Delete cities', function(){
 			.expect(204, done)
 	});
 });
+
+
+
+describe('Show city info', function(){
+	
+	before(function(){
+		client.hset('cities', 'Banana', 'a tasty city');
+	});
+
+	after(function(){
+		client.flushdb();
+	});
+
+
+	it('Returns 200 status code', function(done){
+		request(app)
+			.get('/cities/Banana')
+			.expect(200, done)
+	});
+
+	it('Returns HTML format', function(done){
+		request(app)
+			.get('/cities/Banana')
+			.expect('Content-Type', /html/, done)
+	});
+
+	it('Returns information for given city', function(done){
+		request(app)
+			.get('/cities/Banana')
+			.expect('Banana\n', done)
+	});
+
+})
