@@ -12,8 +12,6 @@
     "body-parser": "https://registry.npmjs.org/body-parser/-/body-parser-1.13.3.tgz",
     "express": "https://registry.npmjs.org/express/-/express-4.13.1.tgz",
     "hiredis": "^0.4.0",
-    "mocha": "~2.2.5",
-    "node": "0.0.0",
     "redis": "^0.12.1"
   },
   "devDependencies": {

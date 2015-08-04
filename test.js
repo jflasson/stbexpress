@@ -4,7 +4,7 @@ var redis = require('redis');
 var client = redis.createClient();
 
 client.select(2);
-client.flushdb();
+
 
 
 describe('Requests to the root path', function(){
@@ -54,9 +54,7 @@ describe('Listing cities on /cities', function(){
 });
 
 describe('Creating new cities', function(){
-	before(function(){
 
-	});
 	it('Return 201 status code', function(done){
 		request(app)
 			.post('/cities')
@@ -74,14 +72,18 @@ describe('Creating new cities', function(){
 
 describe('Delete cities', function(){
 
-	client.hset('cities', 'Banana', 'tasty fruit');
+	before(function(){
+		client.hset('cities', 'Banana', 'a tasty fruit');
+	});
+
+	after(function(){
+		client.flushdb();
+	});
+
 
 	it('Return 204 status code', function(done){
 		request(app)
 			.delete('/cities/Banana')
-			.expect(204)
-			.end(function(error){
-				
-			});
+			.expect(204, done)
 	});
 });

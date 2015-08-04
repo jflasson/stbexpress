@@ -1,4 +1,4 @@
-//@48  min
+//@90  min
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -29,8 +29,11 @@ app.post('/cities', urlencode, function(request, response){
 	});
 });
 
-app.delete('/cities/:name', function(){
-
+app.delete('/cities/:name', function(request, response){
+	client.hdel('cities', request.params.name, function(error){
+		if (error) throw error;
+		response.sendStatus(204);
+	});
 });
 
 module.exports = app; 
