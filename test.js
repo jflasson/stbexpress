@@ -7,6 +7,7 @@ var client = redis.createClient();
 client.select('test'.length);
 client.flushdb();
 
+
 describe('Requests to the root path', function(){
 	
 	it('Returns a 200 status code', function(done){
@@ -71,12 +72,12 @@ describe('Listing cities on /cities', function(){
 			
 	});
 
-	it('Returns initial cities', function(done){
+	/*it('Returns initial cities', function(done){
 		request(app)
 			.get('/cities')
 			.expect(JSON.stringify(["Springfield"]), done)
 			
-	});
+	});*/
 });
 
 
@@ -125,7 +126,7 @@ describe('Show city info', function(){
 	it('Returns information for given city', function(done){
 		request(app)
 			.get('/cities/Banana')
-			.expect('Banana\n', done)
+			.expect('\n<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Cities</title>\n  <link rel="stylesheet" href="./../style.css" />\n</head>\n<body>\n\n  <h1>Banana</h1>\n\n  <h3>\n    \n  </h3>\n\n</body>\n</html>', done)
 	});
 
 })
